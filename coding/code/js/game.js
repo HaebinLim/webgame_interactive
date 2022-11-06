@@ -12,6 +12,7 @@ const key = {
 
 // 키눌림 딜레이 차이 해결
 const renderGame = () => {
+  hero.keyMotion();
   window.requestAnimationFrame(renderGame); // 재귀호출. 초당 60프레임을 그리면서 무한반복
 }
 
@@ -19,11 +20,9 @@ const renderGame = () => {
 const windowEvent = () => {
   window.addEventListener('keydown', e => {
     key.keyDown[key.keyValue[e.which]] = true;
-    hero.keyMotion();
   });
   window.addEventListener('keyup', e => {
     key.keyDown[key.keyValue[e.which]] = false;
-    hero.keyMotion();
   });
 }
 
