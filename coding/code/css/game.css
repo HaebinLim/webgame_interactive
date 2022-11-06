@@ -1,1 +1,73 @@
-/* 코드를 작성하세요 */
+.game_app {
+  position: relative;
+  height: 100vh;
+}
+
+.game_app .game {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background: #000
+}
+
+@keyframes hero_idle {
+  form {
+    background-position-x: 0;
+  }
+
+  to {
+    background-position-x: -3770px;
+  }
+}
+
+@keyframes hero_run {
+  form {
+    background-position-x: 0;
+  }
+
+  to {
+    background-position-x: -3770px;
+  }
+}
+
+@keyframes hero_attack {
+  form {
+    background-position-x: 0;
+  }
+
+  to {
+    background-position-x: -3770px;
+  }
+}
+
+.game_app .hero_box {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  width: 377px;
+  height: 458px;
+
+}
+
+.game_app .hero_box .hero {
+  width: 100%;
+  height: 100%;
+  background: url(../../../lib/images/ninja_idle.png) no-repeat;
+  animation: hero_idle .7s infinite steps(10); // 0.7초 동안 10번 움직임
+}
+
+.game_app .hero_box .hero.flip {
+  transform: rotateY(180deg);
+}
+
+.game_app .hero_box .hero.run {
+  background-image: url(../../../lib/images/ninja_run.png);
+}
+
+.game_app .hero_box .hero.attack {
+  background-image: url(../../../lib/images/ninja_attack.png);
+}
