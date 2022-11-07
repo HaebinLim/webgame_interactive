@@ -64,6 +64,41 @@
   will-change: transform;
 }
 
+.game_app .monster_box {
+  position: absolute;
+  left: 700px;
+  bottom: 0;
+  z-index: 90;
+  width: 280px;
+  height: 294px;
+  will-change: transform;
+}
+
+.game_app .monster_box .hp {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  color: #fff;
+  font-size: 110px;
+  text-align: center;
+  transform: translateY(-100%);
+}
+
+.game_app .monster_box .monster {
+  width: 100%;
+  height: 100%;
+  background: url(../../../lib/images/monster/monster_green_run.png) no-repeat;
+  background-size: auto 294px;
+  animation: monster_run 1s infinite steps(8);
+  /* 0.7초 동안 10번 움직임 */
+}
+
+.game_app .monster_box.remove {
+  opacity: 0;
+  transition: opacity .4s;
+}
+
 @keyframes hero_idle {
   form {
     background-position-x: 0;
@@ -71,5 +106,15 @@
 
   to {
     background-position-x: -1498px;
+  }
+}
+
+@keyframes monster_run {
+  form {
+    background-position-x: 0;
+  }
+
+  to {
+    background-position-x: -2242px;
   }
 }

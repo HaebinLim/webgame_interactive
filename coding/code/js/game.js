@@ -10,6 +10,10 @@ const key = {
   }
 }
 
+const allMonsterComProp = {
+  arr: [], // 생성되는 몬스터를 배열에 담아 관리
+}
+
 const bulletComProp = {
   launch: false, // 공격 키 눌렀을 때 검이 한번만 생성되도록 관리
   arr: [], // 생성되는 검의 인스턴스를 이 배열에 담아 관리
@@ -71,9 +75,12 @@ const loadImg = () => {
 }
 
 let hero;
+
 // 프로그램 시작에 필요한 함수
 const init = () => {
   hero = new Hero('.hero'); // 인스턴스 생성
+  allMonsterComProp.arr[0] = new Monster(500, 9000);
+  allMonsterComProp.arr[1] = new Monster(1000, 9000);
   loadImg();
   windowEvent();
   renderGame();
