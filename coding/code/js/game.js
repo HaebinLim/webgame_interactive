@@ -10,9 +10,22 @@ const key = {
   }
 }
 
+const bulletComProp = {
+  launch: false, // 공격 키 눌렀을 때 검이 한번만 생성되도록 관리
+  arr: [], // 생성되는 검의 인스턴스를 이 배열에 담아 관리
+}
+
+const gameProp = {
+  screenWidth: window.innerWidth,
+  screenHeight: window.innerHeight,
+}
+
 // 키눌림 딜레이 차이 해결
 const renderGame = () => {
   hero.keyMotion();
+  bulletComProp.arr.forEach((arr, i) => {
+    arr.moveBullet();
+  });
   window.requestAnimationFrame(renderGame); // 재귀호출. 초당 60프레임을 그리면서 무한반복
 }
 
@@ -42,13 +55,13 @@ const loadImg = () => {
 }
 
 let hero;
-
 // 프로그램 시작에 필요한 함수
 const init = () => {
   hero = new Hero('.hero'); // 인스턴스 생성
   loadImg();
   windowEvent();
   renderGame();
+  console.log(hero.position());
 }
 
 // 모든 요소 로드 후 게임 실행

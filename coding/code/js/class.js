@@ -3,31 +3,101 @@ class Hero {
     this.el = document.querySelector(el);
     this.movex = 0;
     this.speed = 16;
+    this.direction = 'right';
   }
   keyMotion() {
+    // 이동 키
     if (key.keyDown['left']) {
       this.el.classList.add('run');
       this.el.classList.add('flip');
+      this.direction = 'left';
       this.movex = this.movex - this.speed;
 
     } else if (key.keyDown['right']) {
       this.el.classList.add('run');
       this.el.classList.remove('flip');
+      this.direction = 'right';
       this.movex = this.movex + this.speed;
     }
-
-    if (key.keyDown['attack']) {
-      this.el.classList.add('attack');
-    }
-
     if (!key.keyDown['left'] && !key.keyDown['right']) {
       this.el.classList.remove('run');
     }
+    this.el.parentNode.style.transform = `translateX(${this.movex}px)`;
 
+    // 공격 키
+    if (key.keyDown['attack']) {
+      if (!bulletComProp.launch) {
+        this.el.classList.add('attack');
+        bulletComProp.arr.push(new Bullet());
+        bulletComProp.launch = true;
+      }
+    }
     if (!key.keyDown['attack']) {
       this.el.classList.remove('attack');
+      bulletComProp.launch = false;
     }
+  }
+  // 캐릭터 위치 값
+  position() {
+    return {
+      left: this.el.getBoundingClientRect().left,
+      right: this.el.getBoundingClientRect().right,
+      top: gameProp.screenHeight - this.el.getBoundingClientRect().top,
+      bottom: gameProp.screenHeight - this.el.getBoundingClientRect().top - this.el.getBoundingClientRect().height
+    }
+  }
+  size() {
+    return {
+      width: this.el.offsetWidth,
+      height: this.el.offsetHeight,
+    }
+  }
+}
 
-    this.el.parentNode.style.transform = `translateX(${this.movex}px)`;
+class Bullet {
+  constructor() {
+    this.parentNode = document.querySelector('.game');
+    this.el = document.createElement('div');
+    this.el.className = 'hero_bullet';
+    this.x = 0;
+    this.y = 0;
+    this.speed = 30;
+    this.distance = 0;
+    this.bulletDirection = 'right';
+    this.init();
+  }
+  init() {
+    this.bulletDirection = hero.direction;
+    this.x = hero.position().left + hero.size().width / 2;
+    this.y = hero.position().bottom - hero.size().height / 2;
+    this.distance = hero.position().left + hero.size().width / 2;
+    this.el.style.transform = `translate(${this.x}px, ${this.y}px)`;
+    this.parentNode.appendChild(this.el);
+  }
+  moveBullet() {
+    let setRotate = '';
+    if (this.bulletDirection === 'left') {
+      this.distance -= this.speed;
+      setRotate = 'rotate(180deg)';
+    } else {
+      this.distance += this.speed;
+    }
+    this.el.style.transform = `translate(${this.distance}px, ${this.y}px) ${setRotate}`;
+    this.crashBullet(); // 검이 이동할 때마다 호출
+  }
+  // 검 위치 값
+  position() {
+    return {
+      left: this.el.getBoundingClientRect().left,
+      right: this.el.getBoundingClientRect().right,
+      top: gameProp.screenHeight - this.el.getBoundingClientRect().top,
+      bottom: gameProp.screenHeight - this.el.getBoundingClientRect().top - this.el.getBoundingClientRect().height
+    }
+  }
+  crashBullet() {
+    // 검의 왼쪽 위치가 화면 오른쪽을 벗어남 || 검의 오른쪽 위치가 화면 왼쪽을 벗어남
+    if (this.position().left > gameProp.screenWidth || this.position().right < 0) {
+      this.el.remove();
+    }
   }
 }
