@@ -15,18 +15,30 @@ const bulletComProp = {
   arr: [], // 생성되는 검의 인스턴스를 이 배열에 담아 관리
 }
 
+const gameBackground = {
+  gameBox: document.querySelector('.game'),
+}
+
 const gameProp = {
   screenWidth: window.innerWidth,
   screenHeight: window.innerHeight,
 }
 
-// 키눌림 딜레이 차이 해결
 const renderGame = () => {
-  hero.keyMotion();
+  hero.keyMotion(); // 키눌림 딜레이 차이 해결
+
+  setGameBackground();
+
   bulletComProp.arr.forEach((arr, i) => {
     arr.moveBullet();
   });
+
   window.requestAnimationFrame(renderGame); // 재귀호출. 초당 60프레임을 그리면서 무한반복
+}
+
+const setGameBackground = () => {
+  let parallaxValue = Math.min(0, ((hero.movex - gameProp.screenWidth / 3) * -1)); // 둘 중 작은 값 대입
+  gameBackground.gameBox.style.transform = `translateX(${parallaxValue}px)`;
 }
 
 // window event 함수
@@ -36,6 +48,10 @@ const windowEvent = () => {
   });
   window.addEventListener('keyup', e => {
     key.keyDown[key.keyValue[e.which]] = false;
+  });
+  window.addEventListener('resize', e => {
+    gameProp.screenWidth = window.innerWidth;
+    gameProp.screenHeight = window.innerHeight;
   });
 }
 
@@ -61,7 +77,6 @@ const init = () => {
   loadImg();
   windowEvent();
   renderGame();
-  console.log(hero.position());
 }
 
 // 모든 요소 로드 후 게임 실행

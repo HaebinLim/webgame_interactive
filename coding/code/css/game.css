@@ -1,7 +1,10 @@
 .game_app {
   overflow: hidden;
   position: relative;
+  min-width: 1280px;
   height: 100vh;
+  background: url(../../../lib/images/bg_top.png) repeat-x;
+  background-size: auto 100%;
 }
 
 .game_app .game {
@@ -9,9 +12,11 @@
   top: 0;
   left: 0;
   z-index: 10;
-  width: 100%;
+  width: 70000px;
   height: 100%;
-  background: #000
+  background: url(../../../lib/images/bg_bottom.png) repeat-x;
+  background-size: auto 100%;
+  will-change: transform;
 }
 
 .game_app .hero_box {
@@ -21,7 +26,8 @@
   z-index: 100;
   width: 150px;
   height: 182px;
-
+  will-change: transform;
+  /* 변화될 속성값을 브라우저에서 미리 인지하고 준비하여 부드러운 효과 */
 }
 
 .game_app .hero_box .hero {
@@ -37,13 +43,13 @@
   transform: rotateY(180deg);
 }
 
-.game_app .hero_box .hero.run {
-  background-image: url(../../../lib/images/ninja_run.png);
-}
-
 .game_app .hero_box .hero.attack {
   background-image: url(../../../lib/images/ninja_attack.png);
   animation-iteration-count: 1;
+}
+
+.game_app .hero_box .hero.run {
+  background-image: url(../../../lib/images/ninja_run.png);
 }
 
 .game_app .hero_bullet {
@@ -55,6 +61,7 @@
   height: 24px;
   background: url(../../../lib/images/hero_bullet.png) no-repeat;
   background-size: auto 24px;
+  will-change: transform;
 }
 
 @keyframes hero_idle {
