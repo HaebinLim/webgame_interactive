@@ -7,6 +7,49 @@
   background-size: auto 100%;
 }
 
+.game_app .hp {
+  width: 100%;
+  height: 10px;
+  border: 2px solid #000;
+}
+
+.game_app .hp span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: red;
+}
+
+.game_app .game_info {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  width: 100%;
+  height: 150px;
+}
+
+.game_app .game_info .hero_state {
+  display: flex;
+  width: 300px;
+  padding: 20px;
+}
+
+.game_app .game_info .hero_state .hero_img {
+  flex: 0 0 20%;
+}
+
+.game_app .game_info .hero_state .hero_img img {
+  width: 52px;
+  vertical-align: top;
+}
+
+.game_app .game_info .hero_state .state_box {
+  flex: 1;
+  padding: 10px 0;
+}
+
+
 .game_app .game {
   position: absolute;
   top: 0;
@@ -52,6 +95,18 @@
   background-image: url(../../../lib/images/ninja_run.png);
 }
 
+.game_app .hero_box .hero.crash {
+  background-image: url(../../../lib/images/ninja_crash.png);
+  animation: hero_crash .4s 1 steps(2);
+}
+
+.game_app .hero_box .hero.dead {
+  background-image: url(../../../lib/images/ninja_dead.png);
+  animation: none;
+  transform: rotate(90deg);
+  transform-origin: 50% 80%;
+}
+
 .game_app .hero_bullet {
   position: absolute;
   left: 0;
@@ -78,17 +133,11 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 100%;
-  height: 10px;
-  border: 2px solid #000;
+
   transform: translateY(-100%);
 }
 
 .game_app .monster_box .hp span {
-  display: block;
-  width: 100%;
-  height: 100%;
-  background: red;
   transition: width .3s;
 }
 
@@ -106,6 +155,25 @@
   transition: opacity .4s;
 }
 
+.game_app .game_over {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  font-size: 60px;
+  background: rgba(0, 0, 0, .5);
+}
+
+.game_app .game_over.show {
+  display: flex;
+}
+
 @keyframes hero_idle {
   form {
     background-position-x: 0;
@@ -113,6 +181,16 @@
 
   to {
     background-position-x: -1498px;
+  }
+}
+
+@keyframes hero_crash {
+  form {
+    background-position-x: 0;
+  }
+
+  to {
+    background-position-x: -299px;
   }
 }
 

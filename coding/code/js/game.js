@@ -26,6 +26,7 @@ const gameBackground = {
 const gameProp = {
   screenWidth: window.innerWidth,
   screenHeight: window.innerHeight,
+  gameOver: false,
 }
 
 const renderGame = () => {
@@ -44,6 +45,13 @@ const renderGame = () => {
   window.requestAnimationFrame(renderGame); // 재귀호출. 초당 60프레임을 그리면서 무한반복
 }
 
+const endGame = () => {
+  gameProp.gameOver = true;
+  key.keyDown.left = false;
+  key.keyDown.right = false;
+  document.querySelector('.game_over').classList.add('show');
+}
+
 const setGameBackground = () => {
   let parallaxValue = Math.min(0, ((hero.movex - gameProp.screenWidth / 3) * -1)); // 둘 중 작은 값 대입
   gameBackground.gameBox.style.transform = `translateX(${parallaxValue}px)`;
@@ -52,7 +60,9 @@ const setGameBackground = () => {
 // window event 함수
 const windowEvent = () => {
   window.addEventListener('keydown', e => {
-    key.keyDown[key.keyValue[e.which]] = true;
+    if (!gameProp.gameOver) {
+      key.keyDown[key.keyValue[e.which]] = true;
+    }
   });
   window.addEventListener('keyup', e => {
     key.keyDown[key.keyValue[e.which]] = false;

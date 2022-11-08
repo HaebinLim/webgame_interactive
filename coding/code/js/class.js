@@ -5,6 +5,9 @@ class Hero {
     this.speed = 11;
     this.direction = 'right';
     this.attackDamage = 1000;
+    this.hpProgress = 0;
+    this.hpValue = 10000;
+    this.defaultHpValue = this.hpValue;
   }
   keyMotion() {
     // 이동 키
@@ -52,6 +55,25 @@ class Hero {
       width: this.el.offsetWidth,
       height: this.el.offsetHeight,
     }
+  }
+  updateHp(monsterDamage) {
+    this.hpValue = Math.max(0, this.hpValue - monsterDamage);
+    this.hpProgress = this.hpValue / this.defaultHpValue * 100;
+    document.querySelector('.state_box .hp span').style.width = this.hpProgress + '%';
+    this.crash();
+    if (this.hpValue === 0) {
+      this.dead();
+    }
+  }
+  crash() {
+    this.el.classList.add('crash');
+    setTimeout(() => {
+      this.el.classList.remove('crash');
+    }, 400);
+  }
+  dead() {
+    this.el.classList.add('dead');
+    endGame();
   }
 }
 
@@ -135,6 +157,7 @@ class Monster {
     this.positionX = positionX;
     this.moveX = 0;
     this.speed = 10;
+    this.crashDamage = 100;
     this.init();
   }
   init() {
@@ -176,5 +199,17 @@ class Monster {
       this.moveX -= this.speed;
     }
     this.el.style.transform = `translateX(${this.moveX}px)`;
+
+    // 몬스터가 이동할 때마다 히어로와 충돌했는지 
+    this.crash();
+  }
+  crash() {
+    let rightDiff = 30; // 이미지 여백 때문에
+    let leftDiff = 90;
+
+    // 히어로의 오른쪽 위치와 몬스터의 왼쪽 위치 비교
+    if (hero.position().right - rightDiff > this.position().left && hero.position().left + leftDiff < this.position().right) {
+      hero.updateHp(this.crashDamage);
+    }
   }
 }
