@@ -8,6 +8,7 @@ class Hero {
     this.hpProgress = 0;
     this.hpValue = 10000;
     this.defaultHpValue = this.hpValue;
+    this.realDamage = 0;
   }
   keyMotion() {
     // 이동 키
@@ -75,6 +76,10 @@ class Hero {
     this.el.classList.add('dead');
     endGame();
   }
+  hitDamage() {
+    this.realDamage = this.attackDamage - Math.round(Math.random() * this.attackDamage * 0.1); // 공격력 90%~100% 랜덤
+
+  }
 }
 
 class Bullet {
@@ -131,13 +136,29 @@ class Bullet {
     for (let j = 0; j < allMonsterComProp.arr.length; j++) {
       if (this.position().left > allMonsterComProp.arr[j].position().left && this.position().right < allMonsterComProp.arr[j].position().right) {
         if (bulletComProp.arr[j] === this) {
+          hero.hitDamage();
           bulletComProp.arr.splice(j, 1);
           this.el.remove();
+          this.damageView(allMonsterComProp.arr[j]);
           allMonsterComProp.arr[j].updateHp(j);
         }
       }
     }
+  }
+  damageView(monster) {
+    this.parentNode = document.querySelector('.game_app');
+    this.textDamageNode = document.createElement('div');
+    this.textDamageNode.className = 'text_damage';
+    this.textDamage = document.createTextNode(hero.realDamage);
+    this.textDamageNode.appendChild(this.textDamage);
+    this.parentNode.appendChild(this.textDamageNode);
 
+    let textPosition = Math.random() * -100;
+    let damagex = monster.position().left + textPosition;
+    let damagey = monster.position().top;
+
+    this.textDamageNode.style.transform = `translate(${damagex}px,${-damagey}px)`;
+    setTimeout(() => this.textDamageNode.remove(), 500);
   }
 }
 
@@ -177,7 +198,7 @@ class Monster {
     }
   }
   updateHp(idx) {
-    this.hpValue = Math.max(0, this.hpValue - hero.attackDamage);
+    this.hpValue = Math.max(0, this.hpValue - hero.realDamage);
     this.progress = this.hpValue / this.defaultValue * 100;
     this.el.children[0].children[0].style.width = this.progress + '%';
     if (!this.hpValue) {
