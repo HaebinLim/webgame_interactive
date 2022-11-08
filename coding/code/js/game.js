@@ -37,6 +37,10 @@ const renderGame = () => {
     arr.moveBullet();
   });
 
+  allMonsterComProp.arr.forEach((arr, i) => {
+    arr.moveMonster();
+  })
+
   window.requestAnimationFrame(renderGame); // 재귀호출. 초당 60프레임을 그리면서 무한반복
 }
 
