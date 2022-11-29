@@ -1,12 +1,53 @@
+class Stage {
+  constructor() {
+    this.level = 1;
+    this.isStart = false;
+    this.stageStart();
+  }
+  stageStart() {
+    setTimeout(() => {
+      this.isStart = true;
+      this.stageGuide(`START LEVEL${this.level}`);
+      this.callMonster();
+    }, 2000);
+  }
+  stageGuide(text) {
+    this.parentNode = document.querySelector('.game_app');
+    this.textBox = document.createElement('div');
+    this.textBox.className = 'stage_box';
+    this.textNode = document.createTextNode(text);
+    this.textBox.appendChild(this.textNode);
+    this.parentNode.appendChild(this.textBox);
+    setTimeout(() => this.textBox.remove(), 1500);
+  }
+  callMonster() {
+    for (let i = 0; i <= 10; i++) {
+      if (i === 10) {
+        allMonsterComProp.arr[i] = new Monster(greenBossMonster, hero.movex + gameProp.screenWidth + 600 * i);
+      } else {
+        allMonsterComProp.arr[i] = new Monster(greenMonster, hero.movex + gameProp.screenWidth + 700 * i);
+      }
+    }
+  }
+  clearCheck() {
+    if (allMonsterComProp.arr.length === 0 && this.isStart) {
+      this.isStart = false;
+      this.level++;
+      this.stageGuide('CLEAR!!');
+      this.stageStart();
+    }
+  }
+}
+
 class Hero {
   constructor(el) {
     this.el = document.querySelector(el);
     this.movex = 0;
     this.speed = 11;
     this.direction = 'right';
-    this.attackDamage = 1000;
+    this.attackDamage = 55551000;
     this.hpProgress = 0;
-    this.hpValue = 10000;
+    this.hpValue = 55551000;
     this.defaultHpValue = this.hpValue;
     this.realDamage = 0;
   }

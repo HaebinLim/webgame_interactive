@@ -162,6 +162,16 @@
   background-image: url(../../../lib/images/monster/monster_green_run.png);
 }
 
+.game_app .monster_box.boss {
+  width: 450px;
+  height: 472px;
+}
+
+.game_app .monster_box.boss .monster {
+  background-size: auto 472px;
+  animation-name: monster_run_boss;
+}
+
 
 .game_app .monster_box.remove {
   opacity: 0;
@@ -201,6 +211,19 @@
   animation: textDamage .5s ease-out both;
 }
 
+.game_app .stage_box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 190;
+  transform: translate(-50%, -50%);
+  font-size: 90px;
+  color: #fff;
+  white-space: nowrap;
+  animation: stageStart 1.5s;
+  animation-fill-mode: both;
+}
+
 @keyframes hero_idle {
   form {
     background-position-x: 0;
@@ -231,6 +254,16 @@
   }
 }
 
+@keyframes monster_run_boss {
+  form {
+    background-position-x: 0;
+  }
+
+  to {
+    background-position-x: -3600px;
+  }
+}
+
 @keyframes textDamage {
   0% {
     opacity: 0;
@@ -247,4 +280,18 @@
     bottom: 90px;
   }
 
+}
+
+@keyframes stageStart {
+  0% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }

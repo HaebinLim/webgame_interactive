@@ -20,3 +20,24 @@ const greenMonster = {
   speed: 10,
   crashDamage: 300,
 }
+
+const pinkBossMonster = {
+  name: 'pink_mon boss',
+  hpValue: 5200000,
+  speed: 10,
+  crashDamage: 2000,
+}
+
+const yellowBossMonster = {
+  name: 'yellow_mon boss',
+  hpValue: 1800000,
+  speed: 10,
+  crashDamage: 2000,
+}
+
+const greenBossMonster = {
+  name: 'green_mon boss',
+  hpValue: 800000,
+  speed: 10,
+  crashDamage: 1000,
+}

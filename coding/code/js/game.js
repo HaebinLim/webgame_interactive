@@ -23,6 +23,10 @@ const gameBackground = {
   gameBox: document.querySelector('.game'),
 }
 
+const stageInfo = {
+  stage: [],
+}
+
 const gameProp = {
   screenWidth: window.innerWidth,
   screenHeight: window.innerHeight,
@@ -40,8 +44,9 @@ const renderGame = () => {
 
   allMonsterComProp.arr.forEach((arr, i) => {
     arr.moveMonster();
-  })
+  });
 
+  stageInfo.stage.clearCheck();
   window.requestAnimationFrame(renderGame); // 재귀호출. 초당 60프레임을 그리면서 무한반복
 }
 
@@ -93,9 +98,7 @@ let hero;
 // 프로그램 시작에 필요한 함수
 const init = () => {
   hero = new Hero('.hero'); // 인스턴스 생성
-  allMonsterComProp.arr[0] = new Monster(pinkMonster, gameProp.screenWidth + 700);
-  allMonsterComProp.arr[1] = new Monster(yellowMonster, gameProp.screenWidth + 1400);
-  allMonsterComProp.arr[2] = new Monster(greenMonster, gameProp.screenWidth + 2100);
+  stageInfo.stage = new Stage();
   loadImg();
   windowEvent();
   renderGame();
