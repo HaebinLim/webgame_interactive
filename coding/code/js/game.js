@@ -93,8 +93,9 @@ let hero;
 // 프로그램 시작에 필요한 함수
 const init = () => {
   hero = new Hero('.hero'); // 인스턴스 생성
-  allMonsterComProp.arr[0] = new Monster(500, 9000);
-  allMonsterComProp.arr[1] = new Monster(1000, 9000);
+  allMonsterComProp.arr[0] = new Monster(pinkMonster, gameProp.screenWidth + 700);
+  allMonsterComProp.arr[1] = new Monster(yellowMonster, gameProp.screenWidth + 1400);
+  allMonsterComProp.arr[2] = new Monster(greenMonster, gameProp.screenWidth + 2100);
   loadImg();
   windowEvent();
   renderGame();
