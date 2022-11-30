@@ -1,13 +1,13 @@
 class Stage {
   constructor() {
-    this.level = 1;
+    this.level = 0;
     this.isStart = false;
     this.stageStart();
   }
   stageStart() {
     setTimeout(() => {
       this.isStart = true;
-      this.stageGuide(`START LEVEL${this.level}`);
+      this.stageGuide(`START LEVEL${this.level + 1}`);
       this.callMonster();
     }, 2000);
   }
@@ -23,9 +23,9 @@ class Stage {
   callMonster() {
     for (let i = 0; i <= 10; i++) {
       if (i === 10) {
-        allMonsterComProp.arr[i] = new Monster(greenBossMonster, hero.movex + gameProp.screenWidth + 600 * i);
+        allMonsterComProp.arr[i] = new Monster(stageInfo.monster[this.level].bossMon, hero.movex + gameProp.screenWidth + 600 * i);
       } else {
-        allMonsterComProp.arr[i] = new Monster(greenMonster, hero.movex + gameProp.screenWidth + 700 * i);
+        allMonsterComProp.arr[i] = new Monster(stageInfo.monster[this.level].defaultMon, hero.movex + gameProp.screenWidth + 700 * i);
       }
     }
   }
@@ -33,8 +33,14 @@ class Stage {
     if (allMonsterComProp.arr.length === 0 && this.isStart) {
       this.isStart = false;
       this.level++;
-      this.stageGuide('CLEAR!!');
-      this.stageStart();
+      if (this.level < stageInfo.monster.length) {
+        this.stageGuide('CLEAR!!');
+        this.stageStart();
+        hero.heroUpgrade();
+      } else {
+        // 모든 스테이지 클리어
+        this.stageGuide('ALL CLEAR!!');
+      }
     }
   }
 }
@@ -45,7 +51,7 @@ class Hero {
     this.movex = 0;
     this.speed = 11;
     this.direction = 'right';
-    this.attackDamage = 55551000;
+    this.attackDamage = 20000;
     this.hpProgress = 0;
     this.hpValue = 55551000;
     this.defaultHpValue = this.hpValue;
@@ -119,7 +125,10 @@ class Hero {
   }
   hitDamage() {
     this.realDamage = this.attackDamage - Math.round(Math.random() * this.attackDamage * 0.1); // 공격력 90%~100% 랜덤
-
+  }
+  heroUpgrade() {
+    this.speed += 1.3;
+    this.attackDamage += 15000;
   }
 }
 
