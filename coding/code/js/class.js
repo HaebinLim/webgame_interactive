@@ -2,15 +2,16 @@ class Stage {
   constructor() {
     this.level = 0;
     this.isStart = false;
-    this.stageStart();
+    // this.stageStart();
   }
+  /*
   stageStart() {
     setTimeout(() => {
       this.isStart = true;
       this.stageGuide(`START LEVEL${this.level + 1}`);
       this.callMonster();
     }, 2000);
-  }
+  }*/
   stageGuide(text) {
     this.parentNode = document.querySelector('.game_app');
     this.textBox = document.createElement('div');
@@ -30,6 +31,7 @@ class Stage {
     }
   }
   clearCheck() {
+    /*
     if (allMonsterComProp.arr.length === 0 && this.isStart) {
       this.isStart = false;
       this.level++;
@@ -42,6 +44,20 @@ class Stage {
         this.stageGuide('ALL CLEAR!!');
       }
     }
+    */
+
+    // 히어로 위치에 따라 몬스터 소환
+    stageInfo.callPosition.forEach(arr => {
+      // 소환 위치 도달 && 몬스터 모두 사냥
+      if (hero.movex >= arr && allMonsterComProp.arr.length === 0) {
+        this.stageGuide('🚨!!!');
+        stageInfo.callPosition.shift();
+        setTimeout(() => {
+          this.callMonster();
+          this.level++;
+        }, 1000)
+      }
+    });
   }
 }
 

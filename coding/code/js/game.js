@@ -32,6 +32,7 @@ const stageInfo = {
     { defaultMon: yellowMonster, bossMon: yellowBossMonster }, //stage2
     { defaultMon: pinkMonster, bossMon: pinkBossMonster }, //stage3
   ],
+  callPosition: [1000, 5000, 9000],
 }
 
 const gameProp = {
