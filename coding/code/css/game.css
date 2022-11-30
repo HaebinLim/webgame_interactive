@@ -103,6 +103,11 @@
   background-image: url(../../../lib/images/ninja_run.png);
 }
 
+.game_app .hero_box .hero.slide {
+  background-image: url(../../../lib/images/ninja_slide.png);
+  animation-play-state: 1;
+}
+
 .game_app .hero_box .hero.crash {
   background-image: url(../../../lib/images/ninja_crash.png);
   animation: hero_crash .4s 1 steps(2);

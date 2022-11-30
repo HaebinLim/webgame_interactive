@@ -6,7 +6,8 @@ const key = {
     39: 'right',
     38: 'up',
     40: 'down',
-    88: 'attack',
+    67: 'slide', // c
+    88: 'attack', // x
   }
 }
 

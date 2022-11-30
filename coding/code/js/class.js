@@ -56,6 +56,10 @@ class Hero {
     this.hpValue = 100000;
     this.defaultHpValue = this.hpValue;
     this.realDamage = 0;
+    this.slideSpeed = 14;
+    this.slideTime = 0;
+    this.slideMaxTime = 30;
+    this.slideDown = false;
   }
   keyMotion() {
     // 이동 키
@@ -71,6 +75,7 @@ class Hero {
       this.direction = 'right';
       this.movex = this.movex + this.speed;
     }
+
     if (!key.keyDown['left'] && !key.keyDown['right']) {
       this.el.classList.remove('run');
     }
@@ -88,6 +93,29 @@ class Hero {
       this.el.classList.remove('attack');
       bulletComProp.launch = false;
     }
+
+    // 슬라이드
+    if (key.keyDown['slide']) {
+      if (!this.slideDown) {
+        this.el.classList.add('slide');
+        if (this.direction === 'right') {
+          this.movex += this.slideSpeed;
+        } else {
+          this.movex -= this.slideSpeed;
+        }
+        if (this.slideTime > this.slideMaxTime) {
+          this.el.classList.remove('slide');
+          this.slideDown = true; // 슬라이드 이동 멈춤
+        }
+        this.slideTime += 1;
+      }
+    }
+    if (!key.keyDown['slide']) {
+      this.el.classList.remove('slide');
+      this.slideDown = false;
+      this.slideTime = 0;
+    }
+
   }
   // 캐릭터 위치 값
   position() {
