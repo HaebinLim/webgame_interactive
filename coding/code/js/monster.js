@@ -31,6 +31,7 @@ const greenBossMonster = {
   speed: 4,
   crashDamage: 1000,
   score: 10000,
+  exp: 10000,
 }
 
 const yellowBossMonster = {
@@ -39,6 +40,7 @@ const yellowBossMonster = {
   speed: 4,
   crashDamage: 2000,
   score: 20000,
+  exp: 20000,
 }
 
 const pinkBossMonster = {
@@ -47,4 +49,5 @@ const pinkBossMonster = {
   speed: 3,
   crashDamage: 2500,
   score: 30000,
+  exp: 30000,
 }

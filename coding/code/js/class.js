@@ -60,6 +60,10 @@ class Hero {
     this.slideTime = 0;
     this.slideMaxTime = 30;
     this.slideDown = false;
+    this.level = 1;
+    this.exp = 0;
+    this.maxExp = 3000;
+    this.expProgress = 0;
   }
   keyMotion() {
     // 이동 키
@@ -132,14 +136,21 @@ class Hero {
       height: this.el.offsetHeight,
     }
   }
-  updateHp(monsterDamage) {
+  minusHp(monsterDamage) {
     this.hpValue = Math.max(0, this.hpValue - monsterDamage);
-    this.hpProgress = this.hpValue / this.defaultHpValue * 100;
-    document.querySelector('.state_box .hp span').style.width = this.hpProgress + '%';
+    this.renderHp();
     this.crash();
     if (this.hpValue === 0) {
       this.dead();
     }
+  }
+  plusHp(hp) {
+    this.hpValue = hp;
+    this.renderHp();
+  }
+  renderHp() {
+    this.hpProgress = this.hpValue / this.defaultHpValue * 100;
+    document.querySelector('.state_box .hp span').style.width = this.hpProgress + '%';
   }
   crash() {
     this.el.classList.add('crash');
@@ -155,8 +166,27 @@ class Hero {
     this.realDamage = this.attackDamage - Math.round(Math.random() * this.attackDamage * 0.1); // 공격력 90%~100% 랜덤
   }
   heroUpgrade() {
-    this.speed += 1.3;
-    this.attackDamage += 15000;
+    this.attackDamage += 5000;
+  }
+  updateExp(exp) {
+    this.exp += exp;
+    this.expProgress = this.exp / this.maxExp * 100;
+    document.querySelector('.state_box .exp span').style.width = this.expProgress + '%';
+    if (this.exp >= this.maxExp) {
+      this.levelUp();
+    }
+  }
+  levelUp() {
+    this.exp = 0;
+    this.maxExp = this.maxExp + this.level * 1000;
+    this.level += 1;
+    document.querySelector('.level_box strong').innerText = this.level;
+    const levelGuide = document.querySelector('.level_up');
+    levelGuide.classList.add('active');
+    setTimeout(() => levelGuide.classList.remove('active'), 1000);
+    this.updateExp(this.exp);
+    this.heroUpgrade();
+    this.plusHp(this.defaultHpValue);
   }
 }
 
@@ -258,6 +288,7 @@ class Monster {
     this.speed = property.speed;
     this.crashDamage = property.crashDamage;
     this.score = property.score;
+    this.exp = property.exp;
     this.init();
   }
   init() {
@@ -289,6 +320,7 @@ class Monster {
     setTimeout(() => this.el.remove(), 400);
     allMonsterComProp.arr.splice(idx, 1);
     this.setScore();
+    this.setExp();
   }
   moveMonster() {
     // this.moveX + this.positionX + this.el.offsetWidth 몬스터가 화면 끝에 도착했을 때 0 되는 값
@@ -310,11 +342,14 @@ class Monster {
 
     // 히어로의 오른쪽 위치와 몬스터의 왼쪽 위치 비교
     if (hero.position().right - rightDiff > this.position().left && hero.position().left + leftDiff < this.position().right) {
-      hero.updateHp(this.crashDamage);
+      hero.minusHp(this.crashDamage);
     }
   }
   setScore() {
     stageInfo.totalScore += this.score;
     document.querySelector('.score_box').innerText = stageInfo.totalScore;
+  }
+  setExp() {
+    hero.updateExp(this.exp);
   }
 }
