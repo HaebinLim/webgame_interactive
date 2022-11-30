@@ -25,6 +25,7 @@ const gameBackground = {
 
 const stageInfo = {
   stage: [],
+  totalScore: 0,
   monster: [
     { defaultMon: greenMonster, bossMon: greenBossMonster }, //stage1
     { defaultMon: yellowMonster, bossMon: yellowBossMonster }, //stage2

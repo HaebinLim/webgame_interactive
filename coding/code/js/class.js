@@ -51,9 +51,9 @@ class Hero {
     this.movex = 0;
     this.speed = 11;
     this.direction = 'right';
-    this.attackDamage = 20000;
+    this.attackDamage = 10000;
     this.hpProgress = 0;
-    this.hpValue = 55551000;
+    this.hpValue = 100000;
     this.defaultHpValue = this.hpValue;
     this.realDamage = 0;
   }
@@ -229,6 +229,7 @@ class Monster {
     this.moveX = 0;
     this.speed = property.speed;
     this.crashDamage = property.crashDamage;
+    this.score = property.score;
     this.init();
   }
   init() {
@@ -259,6 +260,7 @@ class Monster {
     this.el.classList.add('remove');
     setTimeout(() => this.el.remove(), 400);
     allMonsterComProp.arr.splice(idx, 1);
+    this.setScore();
   }
   moveMonster() {
     // this.moveX + this.positionX + this.el.offsetWidth 몬스터가 화면 끝에 도착했을 때 0 되는 값
@@ -282,5 +284,9 @@ class Monster {
     if (hero.position().right - rightDiff > this.position().left && hero.position().left + leftDiff < this.position().right) {
       hero.updateHp(this.crashDamage);
     }
+  }
+  setScore() {
+    stageInfo.totalScore += this.score;
+    document.querySelector('.score_box').innerText = stageInfo.totalScore;
   }
 }
