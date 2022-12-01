@@ -2,6 +2,7 @@ const key = {
   keyDown: {},
   keyValue: {
     // key code e.which
+    13: 'enter',
     37: 'left',
     39: 'right',
     38: 'up',
@@ -46,6 +47,9 @@ const renderGame = () => {
 
   setGameBackground();
 
+  npcOne.crash();
+  npcTwo.crash();
+
   bulletComProp.arr.forEach((arr, i) => {
     arr.moveBullet();
   });
@@ -55,6 +59,7 @@ const renderGame = () => {
   });
 
   stageInfo.stage.clearCheck();
+
   window.requestAnimationFrame(renderGame); // 재귀호출. 초당 60프레임을 그리면서 무한반복
 }
 
@@ -75,6 +80,10 @@ const windowEvent = () => {
   window.addEventListener('keydown', e => {
     if (!gameProp.gameOver) {
       key.keyDown[key.keyValue[e.which]] = true;
+    }
+    if (key.keyDown['enter']) {
+      npcOne.talk();
+      npcTwo.talk();
     }
   });
   window.addEventListener('keyup', e => {
@@ -102,11 +111,15 @@ const loadImg = () => {
 }
 
 let hero;
+let npcOne;
+let npcTwo;
 
 // 프로그램 시작에 필요한 함수
 const init = () => {
   hero = new Hero('.hero'); // 인스턴스 생성
   stageInfo.stage = new Stage();
+  npcOne = new Npc(levelQuest);
+  npcTwo = new Npc(levelQuestTwo);
   loadImg();
   windowEvent();
   renderGame();

@@ -159,6 +159,44 @@
   animation-fill-mode: both;
 }
 
+.game_app .npc_box {
+  position: absolute;
+  left: 400px;
+  bottom: 0;
+  z-index: 90;
+  width: 150px;
+  height: 182px;
+}
+
+.game_app .npc_box .talk_box {
+  position: absolute;
+  left: 60px;
+  bottom: 100%;
+  padding: 10px;
+  width: 150px;
+  border: 2px solid #555;
+  border-radius: 20px;
+  box-sizing: border-box;
+  color: #222;
+  background-color: #f1f1f1;
+}
+
+.game_app .npc_box .talk_box span {
+  display: block;
+  color: #bf0000;
+  text-align: right;
+  font-size: 14px;
+}
+
+.game_app .npc_box .npc {
+  width: 100%;
+  height: 100%;
+  background-image: url(../../../lib/images/robot_idle.png);
+  background-size: auto 182px;
+  animation: hero_idle .7s infinite steps(10);
+}
+
+
 .game_app .hero_bullet {
   position: absolute;
   left: 0;
@@ -272,6 +310,58 @@
   white-space: nowrap;
   animation: stageStart 1.5s;
   animation-fill-mode: both;
+}
+
+.quest_modal {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 210;
+  background-color: rgba(0, 0, 0, .5);
+}
+
+.quest_modal.active {
+  display: block;
+}
+
+.quest_modal .inner_box {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 10;
+  padding: 40px 10px;
+  width: 700px;
+  border: 10px solid #8793eb;
+  box-sizing: border-box;
+  transform: translate(-50%, -50%);
+  background: #fff;
+}
+
+.quest_modal .inner_box .quest_talk {
+  display: flex;
+  gap: 0 20px;
+  padding: 0 20px;
+  color: #222;
+  font-size: 20px;
+}
+
+.quest_modal .inner_box .quest_talk img {
+  width: auto;
+  height: 90px;
+}
+
+.quest_modal .inner_box .quest_talk span {
+  color: red;
+}
+
+.quest_modal .inner_box .close {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  color: red;
 }
 
 @keyframes hero_idle {
