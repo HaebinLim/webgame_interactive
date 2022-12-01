@@ -172,7 +172,7 @@ class Hero {
         if (this.direction === 'right') {
           this.movex += this.slideSpeed;
         } else {
-          this.movex -= this.slideSpeed;
+          this.movex = this.movex <= 0 ? 0 : this.movex - this.slideSpeed;
         }
         if (this.slideTime > this.slideMaxTime) {
           this.el.classList.remove('slide');

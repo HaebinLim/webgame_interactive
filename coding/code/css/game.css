@@ -261,6 +261,17 @@
   animation-name: monster_run_boss;
 }
 
+.game_app .monster_box.zombie_king {
+  width: 430px;
+  height: 519px;
+}
+
+.game_app .monster_box.zombie_king .monster {
+  background: url(../../../lib/images/monster/zombie_run.png) no-repeat;
+  background-size: auto 519px;
+  animation: zombie_king_run 1s infinite steps(10);
+}
+
 .game_app .monster_box.remove {
   opacity: 0;
   transition: opacity .4s;
@@ -401,6 +412,16 @@
 
   to {
     background-position-x: -3600px;
+  }
+}
+
+@keyframes zombie_king_run {
+  form {
+    background-position-x: 0;
+  }
+
+  to {
+    background-position-x: -4300px;
   }
 }
 
